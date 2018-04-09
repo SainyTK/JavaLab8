@@ -2,51 +2,44 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SwingCounter extends JFrame implements ActionListener{
-
-	private JLabel jlCount;
-	private JTextField jtfCount;
-	private JButton jbCount;
-
-	private int n;
+public class SwingCounter extends JFrame
+{
+	private int count;
+	private JLabel jlabel;
+	private JTextField jTextField;
+	private JButton jButton;
 
 	public SwingCounter()
 	{
 		super("Swing Counter");
 
+		count = 0;
 
-		jlCount = new JLabel("Counter");
-		jtfCount = new JTextField(10);
+		jlabel = new JLabel("Counter");
+		jTextField = new JTextField(10);
+		jTextField.setText("0");
+		jButton = new JButton("Count");
 
-		n = 0;
-		jtfCount.setText(n+"");
-
-		jbCount = new JButton("count");
-
-		jbCount.addActionListener(this);
+		jButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				count++;
+				jTextField.setText(count+"");
+			}
+		});
 
 		Container c = getContentPane();
+		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT,5,5);
+		c.setLayout(flowLayout);
 
-		c.setLayout(new FlowLayout(FlowLayout.LEFT,10,20));
+		c.add(jlabel);
+		c.add(jTextField);
+		c.add(jButton);
 
-		c.add(jlCount);
-		c.add(jtfCount);
-		c.add(jbCount);
-		
+		this.setSize(500,200);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		this.setSize(300,200);
 		this.setVisible(true);
 	}
-
-	//override
-	public void actionPerformed(ActionEvent e)
-	{
-		if(e.getSource() == jbCount)
-		{
-			n++;
-			jtfCount.setText(n+"");
-		}
-	}
-	
 }

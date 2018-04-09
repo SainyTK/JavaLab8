@@ -2,63 +2,63 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TemperatureConverter extends JFrame
+public class TemperatureConverter extends JFrame implements ActionListener
 {
-	private JLabel jlCelcius;
-	private JLabel jlFarenheit;
-	private JTextField jtfCelcius;
-	private JTextField jtfFarenheit;
+	private JLabel celciusLabel;
+	private JTextField celciusTextField;
+	private JLabel fahrenhietLabel;
+	private JTextField fahrenheitTextField;
 
 	private double celcius;
-	private double farenheit;
+	private double fahrenheit;
 
 	public TemperatureConverter()
 	{
 		super("Temperature Converter");
 
-		jlCelcius = new JLabel("Celcius:");
-		jlFarenheit = new JLabel("Farenheit:");
-		jtfCelcius = new JTextField(10);
-		jtfFarenheit = new JTextField(10);
+		celcius = 0.0;
+		fahrenheit = celcius * 9/5 + 32;
 
-		celcius = 0;
-		farenheit = celcius * 9/5 + 32;
+		celciusLabel = new JLabel("Celcius:");
+		celciusTextField = new JTextField(10);
+		celciusTextField.setText(celcius+"");
+		fahrenhietLabel = new JLabel("Fahrenheit:");
+		fahrenheitTextField = new JTextField(10);
+		fahrenheitTextField.setText(fahrenheit+"");
 
-		jtfCelcius.setText(celcius+"");
-		jtfFarenheit.setText(farenheit+"");
+		celciusTextField.addActionListener(this);
+		fahrenheitTextField.addActionListener(this);
 
-		jtfCelcius.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				String s = jtfCelcius.getText();
-				celcius = Integer.parseInt(s);
-				farenheit = celcius * 9/5 + 32;
-				jtfFarenheit.setText(farenheit+"");
-			}
-		});
+		Container c = getContentPane();
+		GridLayout gridLayout = new GridLayout(2,2);
+		c.setLayout(gridLayout);
 
-		jtfFarenheit.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				String s = jtfCelcius.getText();
-				farenheit = Integer.parseInt(s);
-				celcius = (farenheit - 32) * 5/9;
-				jtfCelcius.setText(celcius+"");
-			}
-		});
+		c.add(celciusLabel);
+		c.add(celciusTextField);
+		c.add(fahrenhietLabel);
+		c.add(fahrenheitTextField);
 
-		setLayout(new GridLayout(2,2));
-
-		add(jlCelcius);
-		add(jtfCelcius);
-		add(jlFarenheit);
-		add(jtfFarenheit);
-
-		this.setSize(300,100);
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		this.setSize(500,150);
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+
+		if(e.getSource() == celciusTextField)
+		{
+			celcius = Double.parseDouble(celciusTextField.getText());
+			fahrenheit = celcius * 9/5 + 32;
+			fahrenheitTextField.setText(fahrenheit+"");
+		}
+		else if(e.getSource() == fahrenheitTextField)
+		{
+
+			fahrenheit = Double.parseDouble(fahrenheitTextField.getText());
+			celcius = (fahrenheit-32) * 5/9;
+			celciusTextField.setText(celcius+"");
+		}
 	}
 }

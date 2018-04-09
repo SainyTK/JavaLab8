@@ -2,114 +2,73 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SwingCalculator extends JFrame implements ActionListener{
+public class SwingCalculator extends JFrame implements ActionListener
+{
+	private JTextField jtf;
+	private JPanel jpanel;
+	private JButton[] jbtn;
 
-	private JTextField jtfDisplay;
-	private JPanel jpInput;
-
-	private JButton jb7;
-	private JButton jb8;
-	private JButton jb9;
-	private JButton jbPlus;
-	private JButton jb4;
-	private JButton jb5;
-	private JButton jb6;
-	private JButton jbMinus;
-	private JButton jb1;
-	private JButton jb2;
-	private JButton jb3;
-	private JButton jbMul;
-	private JButton jbC;
-	private JButton jb0;
-	private JButton jbEqual;
-	private JButton jbSlash;
-
-	private String screenBuffer;
 	private double a;
 	private double b;
-	private double result;
+	private int state;
+
+	private final String[] btnStrings = {"7","8","9","+",
+										"4","5","6","-",
+										"1","2","3","*",
+										"C","0","=","/"};
 
 	public SwingCalculator()
 	{
-		super("Swing Counter");
+		super("Swing Calculator");
 
-		screenBuffer = "";
 		a = 0;
 		b = 0;
-		result = 0;
+		state = 1;
 
-		 jtfDisplay = new JTextField(10);
-		 jpInput = new JPanel();
-		 jpInput.setLayout(new GridLayout(4,4));
+		jtf = new JTextField(500);
+		jtf.setHorizontalAlignment(SwingConstants.RIGHT);
+		jtf.setText("0");
+		jpanel = new JPanel();
+		jpanel.setLayout(new GridLayout(4,4));
 
-		 JButton jb7 = new JButton("7");
-		 JButton jb8 = new JButton("8");
-		 JButton jb9 = new JButton("9");
-		 JButton jbPlus = new JButton("+");
-		 JButton jb4 = new JButton("4");
-		 JButton jb5 = new JButton("5");
-		 JButton jb6 = new JButton("6");
-		 JButton jbMinus = new JButton("-");
-		 JButton jb1 = new JButton("1");
-		 JButton jb2 = new JButton("2");
-		 JButton jb3 = new JButton("3");
-		 JButton jbMul = new JButton("*");
-		 JButton jbC = new JButton("C");
-		 JButton jb0 = new JButton("0");
-		 JButton jbEqual = new JButton("=");
-		 JButton jbSlash = new JButton("/");
-
-		 jb7.addActionListener(this);
-		 jb8.addActionListener(this);
-		 jb9.addActionListener(this);
-		 jbPlus.addActionListener(this);
-		 jb4.addActionListener(this);
-		 jb5.addActionListener(this);
-		 jb6.addActionListener(this);
-		 jbMinus.addActionListener(this);
-		 jb1.addActionListener(this);
-		 jb2.addActionListener(this);
-		 jb3.addActionListener(this);
-		 jbMul.addActionListener(this);
-		 jbC.addActionListener(this);
-		 jb0.addActionListener(this);
-		 jbEqual.addActionListener(this);
-		 jbSlash.addActionListener(this);
-
-		 jpInput.add(jb7);
-		 jpInput.add(jb8);
-		 jpInput.add(jb9);
-		 jpInput.add(jbPlus);
-
-		 jpInput.add(jb4);
-		 jpInput.add(jb5);
-		 jpInput.add(jb6);
-		 jpInput.add(jbMinus);
-
-		 jpInput.add(jb1);
-		 jpInput.add(jb2);
-		 jpInput.add(jb3);
-		 jpInput.add(jbMul);
-
-		 jpInput.add(jbC);
-		 jpInput.add(jb0);
-		 jpInput.add(jbEqual);
-		 jpInput.add(jbSlash);
+		jbtn = new JButton[16];
+		for(int i=0;i<16;i++)
+		{
+			jbtn[i] = new JButton(btnStrings[i]);
+			jbtn[i].addActionListener(this);
+			jpanel.add(jbtn[i]);
+		}
 
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
+		c.add(jtf,BorderLayout.NORTH);
+		c.add(jpanel,BorderLayout.CENTER);
 
-		c.add(jtfDisplay,BorderLayout.NORTH);
-		c.add(jpInput,BorderLayout.CENTER);
-
-		this.setSize(200,300);
+		this.setSize(350,200);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setVisible(true);
-	}
+	}	
 
 	public void actionPerformed(ActionEvent e)
 	{
-		
-	}
+		if(e.getSource() == jbtn[12]) // C
+		{
+			a = 0;
+			b = 0;
+			state = 1;
+			jtf.setText("0");
+		}
+		else if(e.getSource() == jbn[14]) // = 
+		{
+			jtf.setText((a+b)+"");
+			a = 0;
+			b = 0;
+			state = 1;
+		}
+		else if(e.getSource == jbtn[3]) //+
+		{
+			
+		}
+	}							
 }
